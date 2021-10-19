@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="rank" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="rank"/>
+<localVariables>
+  <variable id="RankNum" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="INTEGER" mandatory="false" defaultValue="1">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="SALES.SALES_FLAT" partitionedExecution="false">
+    <resourceUri>SALES.SALES_FLAT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1" allowFilterPushdown="false">
+    <viewAttributes>
+      <viewAttribute id="SALESORDER" aggregationType="sum"/>
+      <viewAttribute id="SALESITEM" aggregationType="sum"/>
+      <viewAttribute id="DOC_TYPE"/>
+      <viewAttribute id="MATERIAL_NUM"/>
+      <viewAttribute id="ORDER_QTY" aggregationType="sum"/>
+      <viewAttribute id="UNIT"/>
+      <viewAttribute id="NET_VALUE" aggregationType="sum"/>
+      <viewAttribute id="CURRENCY"/>
+      <viewAttribute id="CREATAED_AT"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="SALES.SALES_FLAT"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="SALESORDER"/>
+      <partitionViewAttributeName id="SALESITEM"/>
+      <order byViewAttributeName="CREATAED_AT" direction="DESC"/>
+      <rankThreshold>
+        <localVariable>RankNum</localVariable>
+      </rankThreshold>
+      <rankViewAttributeName>RANKS</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Rank_1" ignoreMultipleOutputsForFilter="false">
+  <attributes>
+    <attribute id="DOC_TYPE" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DOC_TYPE"/>
+      <keyMapping columnObjectName="Rank_1" columnName="DOC_TYPE"/>
+    </attribute>
+    <attribute id="MATERIAL_NUM" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="MATERIAL_NUM"/>
+      <keyMapping columnObjectName="Rank_1" columnName="MATERIAL_NUM"/>
+    </attribute>
+    <attribute id="UNIT" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UNIT"/>
+      <keyMapping columnObjectName="Rank_1" columnName="UNIT"/>
+    </attribute>
+    <attribute id="CURRENCY" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CURRENCY"/>
+      <keyMapping columnObjectName="Rank_1" columnName="CURRENCY"/>
+    </attribute>
+    <attribute id="CREATAED_AT" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CREATAED_AT"/>
+      <keyMapping columnObjectName="Rank_1" columnName="CREATAED_AT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="SALESORDER" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="SALESORDER"/>
+      <measureMapping columnObjectName="Rank_1" columnName="SALESORDER"/>
+    </measure>
+    <measure id="SALESITEM" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="SALESITEM"/>
+      <measureMapping columnObjectName="Rank_1" columnName="SALESITEM"/>
+    </measure>
+    <measure id="ORDER_QTY" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ORDER_QTY"/>
+      <measureMapping columnObjectName="Rank_1" columnName="ORDER_QTY"/>
+    </measure>
+    <measure id="NET_VALUE" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="NET_VALUE"/>
+      <measureMapping columnObjectName="Rank_1" columnName="NET_VALUE"/>
+    </measure>
+    <measure id="RANKS" order="10" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="RANKS"/>
+      <measureMapping columnObjectName="Rank_1" columnName="RANKS"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="229"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

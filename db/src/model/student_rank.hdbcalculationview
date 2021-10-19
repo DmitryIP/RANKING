@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="student_rank" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="student_rank"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="SAP_STUDENT.ORDERS_DATA_RANK">
+    <resourceUri>SAP_STUDENT.ORDERS_DATA_RANK</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="ORDER_NO" aggregationType="sum"/>
+      <viewAttribute id="CUST_NO"/>
+      <viewAttribute id="PROD_NO"/>
+      <viewAttribute id="QUANTITY" aggregationType="sum"/>
+      <viewAttribute id="PRICE" aggregationType="sum"/>
+      <viewAttribute id="ORDERED_TIME"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="SAP_STUDENT.ORDERS_DATA_RANK"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <partitionViewAttributeName id="ORDER_NO"/>
+      <order byViewAttributeName="ORDERED_TIME" direction="DESC"/>
+      <rankThreshold>
+        <value>5</value>
+      </rankThreshold>
+      <rankViewAttributeName>Rank_Column</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="CUST_NO" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CUST_NO"/>
+      <keyMapping columnObjectName="Rank_1" columnName="CUST_NO"/>
+    </attribute>
+    <attribute id="PROD_NO" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROD_NO"/>
+      <keyMapping columnObjectName="Rank_1" columnName="PROD_NO"/>
+    </attribute>
+    <attribute id="ORDERED_TIME" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ORDERED_TIME"/>
+      <keyMapping columnObjectName="Rank_1" columnName="ORDERED_TIME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="ORDER_NO" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="ORDER_NO"/>
+      <measureMapping columnObjectName="Rank_1" columnName="ORDER_NO"/>
+    </measure>
+    <measure id="QUANTITY" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="QUANTITY"/>
+      <measureMapping columnObjectName="Rank_1" columnName="QUANTITY"/>
+    </measure>
+    <measure id="PRICE" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="PRICE"/>
+      <measureMapping columnObjectName="Rank_1" columnName="PRICE"/>
+    </measure>
+    <measure id="Rank_Column" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Rank_Column"/>
+      <measureMapping columnObjectName="Rank_1" columnName="Rank_Column"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="194"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

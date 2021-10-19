@@ -1,0 +1,13 @@
+/*@@layout{"layoutInfo":{"x":-68.0068359375,"y":7.5}}*/
+context SAP_STUDENT {
+
+    /*@@layout{"layoutInfo":{"x":-109,"y":9.5}}*/
+    entity ORDERS_DATA_RANK {
+        ORDER_NO     : Integer;
+        CUST_NO      : String(10);
+        PROD_NO      : String(10);
+        QUANTITY     : Integer;
+        PRICE        : Integer;
+        ORDERED_TIME : UTCDateTime;
+    };
+};

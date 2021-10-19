@@ -1,0 +1,16 @@
+/*@@layout{"layoutInfo":{"x":-208,"y":-125}}*/
+context SALES {
+
+    /*@@layout{"layoutInfo":{"x":-479,"y":-258.5}}*/
+    entity SALES_FLAT {
+        SALESORDER   : Integer;
+        SALESITEM    : Integer;
+        DOC_TYPE     : String(4);
+        MATERIAL_NUM : String(18);
+        ORDER_QTY    : Integer;
+        UNIT         : String(2);
+        NET_VALUE    : Decimal(15, 2);
+        CURRENCY     : String(3);
+        CREATAED_AT  : UTCDateTime;
+    };
+};
